@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("superhelte")
@@ -20,21 +21,34 @@ public class SuperheltController {
     }
 
     @RequestMapping("/")
-    public ResponseEntity<ArrayList<Superhelt>> printSuperhelte(){
-        ArrayList<Superhelt> superhelte = superheltService.getSuperhelte();
+    public ResponseEntity<List<Superhelt>> printSuperhelte(){
+        List<Superhelt> superhelte = superheltService.getSuperhelte();
         return new ResponseEntity<>(superhelte, HttpStatus.OK);
     }
 
     @RequestMapping(path = "/{navn}")
-    public ResponseEntity<ArrayList<Superhelt>> printSpecifikSuperhelt(@PathVariable String navn){
-        ArrayList<Superhelt> searchResults = superheltService.searchForSuperhero(navn);
+    public ResponseEntity<List<Superhelt>> printSpecifikSuperhelt(@PathVariable String navn){
+        List<Superhelt> searchResults = superheltService.searchForSuperhero(navn);
         return new ResponseEntity<>(searchResults, HttpStatus.OK);
     }
 
     @PostMapping(path="/opret")
-    public ResponseEntity<Superhelt> opretSuperhelt(@RequestBody String realName, String heroName,
-                                                    int creationYear, String superPower, boolean isHuman, double power){
-        Superhelt superhelt = superheltService.createSuperHero(realName, heroName, creationYear, superPower, isHuman, power);
-        return new ResponseEntity<Superhelt>(superhelt, HttpStatus.CREATED);
+    public ResponseEntity<Superhelt> opretSuperhelt(@RequestBody Superhelt superhelt){
+        Superhelt newSuperhelt = superheltService.createSuperHero(superhelt.getRealName(), superhelt.getHeroName(), superhelt.getCreationYear(),
+                superhelt.getSuperPower(), superhelt.isHuman(), superhelt.getPower());
+        return new ResponseEntity<Superhelt>(newSuperhelt, HttpStatus.CREATED);
     }
+
+    /*@PutMapping(path="/ret")
+    public ResponseEntity<Superhelt> retSuperhelt(@RequestBody Superhelt superhelt){
+
+    }*/
+
+    @DeleteMapping(path="/slet/{navn}")
+    public ResponseEntity<List<Superhelt>> sletSuperhelt(@PathVariable String navn){
+        List<Superhelt> slettetSuperhelt = superheltService.deleteSuperhero(navn);
+        return new ResponseEntity<>(slettetSuperhelt, HttpStatus.OK);
+    }
+
+
 }
