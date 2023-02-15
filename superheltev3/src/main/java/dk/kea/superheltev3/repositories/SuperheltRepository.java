@@ -64,7 +64,7 @@ public class SuperheltRepository {
             superhelt.setHeroName(newHeroName);
         }
 
-        if(newCreationYear != 0){
+        if(newCreationYear >= 0){
             superhelt.setCreationYear(String.valueOf(newCreationYear));
         }
 
@@ -76,7 +76,7 @@ public class SuperheltRepository {
             superhelt.setHuman(newIsHuman);
         }
 
-        if(newPower != 0){
+        if(newPower >= 0){
             superhelt.setPower(String.valueOf(newPower));
         }
 
