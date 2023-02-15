@@ -62,10 +62,13 @@ public class SuperheltController {
         return new ResponseEntity<Superhelt>(newSuperhelt, HttpStatus.CREATED);
     }
 
-    /*@PutMapping(path="/ret")
+    @PutMapping(path="/ret")
     public ResponseEntity<Superhelt> retSuperhelt(@RequestBody Superhelt superhelt){
-
-    }*/
+        // Edit superhero
+        superheltService.editSuperhero(superhelt, superhelt.getRealName(), superhelt.getHeroName(), superhelt.getCreationYear(),
+                superhelt.getSuperPower(), superhelt.isHuman(), superhelt.getPower());
+        return new ResponseEntity<Superhelt>(superhelt, HttpStatus.OK);
+    }
 
     @DeleteMapping(path="/slet/{navn}")
     public ResponseEntity<List<Superhelt>> sletSuperhelt(@PathVariable String navn){

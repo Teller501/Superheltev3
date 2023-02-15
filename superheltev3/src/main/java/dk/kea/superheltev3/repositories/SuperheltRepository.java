@@ -53,4 +53,32 @@ public class SuperheltRepository {
 
         return searchResults;
     }
+
+    public void editSuperhero(Superhelt superhelt, String newRealName, String newHeroName, int newCreationYear, String newSuperPower, boolean newIsHuman, double newPower){
+        // edit the superhero
+        if(newRealName != null){
+            superhelt.setRealName(newRealName);
+        }
+
+        if(newHeroName != null){
+            superhelt.setHeroName(newHeroName);
+        }
+
+        if(newCreationYear != 0){
+            superhelt.setCreationYear(String.valueOf(newCreationYear));
+        }
+
+        if(newSuperPower != null){
+            superhelt.setSuperPower(newSuperPower);
+        }
+
+        if(newIsHuman != false){
+            superhelt.setHuman(newIsHuman);
+        }
+
+        if(newPower != 0){
+            superhelt.setPower(String.valueOf(newPower));
+        }
+
+    }
 }
