@@ -2,6 +2,7 @@ package dk.kea.superheltev3.controllers;
 
 import dk.kea.superheltev3.model.Superhelt;
 import dk.kea.superheltev3.services.SuperheltService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -21,9 +22,31 @@ public class SuperheltController {
     }
 
     @RequestMapping("/")
-    public ResponseEntity<List<Superhelt>> printSuperhelte(){
+    public ResponseEntity<?> printSuperhelte(@RequestParam(required = false) String format){
         List<Superhelt> superhelte = superheltService.getSuperhelte();
-        return new ResponseEntity<>(superhelte, HttpStatus.OK);
+
+        if(format != null && format.equals("html")){
+            StringBuilder html = new StringBuilder();
+            html.append("<table>");
+            html.append("<tr><th>Superhero Name</th><th>Real Name</th><th>Creation Year</th><th>Superpower</th>" +
+                    "<th>Is Human</th><th>Power</th></tr>");
+            for (Superhelt superhelt : superhelte){
+                html.append("<tr><td>").append(superhelt.getRealName()).append("</td>");
+                html.append("<td>").append(superhelt.getHeroName()).append("</td>");
+                html.append("<td>").append(superhelt.getCreationYear()).append("</td>");
+                html.append("<td>").append(superhelt.getSuperPower()).append("</td>");
+                html.append("<td>").append(superhelt.isHuman()).append("</td>");
+                html.append("<td>").append(superhelt.getPower()).append("</td></tr>");
+            }
+            html.append("</table>");
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("content-type", "text/html");
+            return new ResponseEntity<>(html.toString(), headers, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(superhelte, HttpStatus.OK);
+        }
+
     }
 
     @RequestMapping(path = "/{navn}")
