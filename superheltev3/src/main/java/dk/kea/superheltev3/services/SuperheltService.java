@@ -32,7 +32,8 @@ public class SuperheltService {
         return superheltRepository.deleteSuperhero(searchTerm);
     }
 
-    public void editSuperhero(Superhelt superhelt, String newRealName, String newHeroName, int newCreationYear, String newSuperPower, boolean newIsHuman, double newPower){
-        superheltRepository.editSuperhero(superhelt, newRealName, newHeroName, newCreationYear, newSuperPower, newIsHuman, newPower);
+    public Superhelt editSuperhero(Superhelt superhelt){
+       Superhelt retSuperhelt = superheltRepository.editSuperhero(superhelt);
+       return retSuperhelt;
     }
 }

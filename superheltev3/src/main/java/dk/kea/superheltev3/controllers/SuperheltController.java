@@ -65,9 +65,8 @@ public class SuperheltController {
     @PutMapping(path="/ret")
     public ResponseEntity<Superhelt> retSuperhelt(@RequestBody Superhelt superhelt){
         // Edit superhero
-        superheltService.editSuperhero(superhelt, superhelt.getRealName(), superhelt.getHeroName(), superhelt.getCreationYear(),
-                superhelt.getSuperPower(), superhelt.isHuman(), superhelt.getPower());
-        return new ResponseEntity<Superhelt>(superhelt, HttpStatus.OK);
+        Superhelt retSuperhelt = superheltService.editSuperhero(superhelt);
+        return new ResponseEntity<Superhelt>(retSuperhelt, HttpStatus.OK);
     }
 
     @DeleteMapping(path="/slet/{navn}")
